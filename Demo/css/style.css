@@ -1,0 +1,205 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.grid-holder{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.container{
+    background-color: #bbbbbb ; 
+    border: 1px solid black;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 30vh
+}
+
+.carousel{
+    grid-column: 1/4;
+}
+
+.recommended-cards{
+    grid-column: 1/4;
+}
+
+.alternate-cards{
+    grid-column: 4/5
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+#sidebar{
+    position: absolute;
+    width: 300px;
+    height: 100%;
+    background: #000;
+    z-index: 1;
+    left: -300px;
+    transition: .4s;
+}
+
+#sidebar.active{
+    left: 0;
+}
+
+#sidebar ul li{
+    list-style: none;
+    color: #fff;
+    font-size: 20px;
+    padding: 20px 24px;
+}
+
+
+header {
+	height: 50px;
+	background-color: #111111;
+	border-bottom: 1px solid #494949;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+
+header > .top {
+	position: absolute;
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+    margin-left: 0%;
+    background-color: #FFDC00;
+}
+header > .top a.menu_icon i {
+	color: #000;
+	font-size: 40px;
+	padding: 5px;
+    transition: .2s ease;
+  
+}
+
+
+header > .header-title{
+    display: inline-block;
+    position: absolute;
+    height: 50px;
+    margin-left: 50%;
+}
+
+ .header-text{
+    color: #fff;
+    padding: 5px;
+    font-size: 30px;
+}
+header > .user-status{
+    display: inline-block;
+    position: absolute;
+    height: 50px;
+    width: 150px;
+    right: 0;
+  
+}
+
+#status-txt{
+    color: #fff;
+    padding: 15px;
+    font-size: 15px;
+}
+
+
+.login-modal{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.login-content{
+    width: 300px;
+    height: 200px;
+    background-color: #fff;
+    z-index: 2;
+    border-radius: 4px;
+    border: solid black 1px;
+    position: relative;
+}
+
+.log-input{
+    width: 50%;
+    display: block;
+    margin: 15px auto;
+}
+
+.login-btn{
+    width: 30%;
+    background-color: #FFDC00;
+    border-radius: 5px;
+    display: block;
+    margin: 15px auto;
+    outline: none;
+    text-align: center;
+}
+
+.close{
+    position: absolute;
+    top: 0;
+    right: 14px;
+    font-size: 42px;
+    transform: rotate(45deg);
+}
+
+
+
+
+.logout-modal{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.logout-content{
+    width: 300px;
+    height: 200px;
+    background-color: #fff;
+    z-index: 2;
+    border-radius: 4px;
+    border: solid black 1px;
+    text-align: center;
+    position: relative;
+}
+
+
+.close{
+    position: absolute;
+    top: 0;
+    right: 14px;
+    font-size: 42px;
+    transform: rotate(45deg);
+}
+
+
+
+.logout-text{
+    margin: 40px 15px;
+    font-size: 20px;
+    display: block;
+
+}
+
+.logout-btn{
+    margin: 15px auto;
+    display: block;
+    width: 20%;
+    background-color: #FFDC00;
+    border-radius: 5px;
+}
