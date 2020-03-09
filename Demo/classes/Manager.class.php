@@ -208,4 +208,8 @@ class Manager extends Dbh{
         $stmt->execute([$user, $article, $type] );
     }
 
+    protected fileHandler($file){
+        
+    }
+
 }
