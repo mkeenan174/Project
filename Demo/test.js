@@ -2,16 +2,18 @@
 //import article from './js/article.js';
 import log from './js/log.js';
 import ui from './js/ui.js';
+import articles from './js/article.js';
 //import logout from './js/login';
 
 
 window.addEventListener('load', () => {
     //logTest();
-    getArticles(printer);
-    getArticles(cardFiller, 'test-pen', 'small');
+    // getArticles(printer);
+    // getArticles(cardFiller, 'test-pen', 'small');
     //log.logStatus();
     log.Setup();
     ui.setup();
+    //articles.getArticles('test-pen');
     // talk();
     // var comments = SetUpComments();
     // var articles = SetupArticles();

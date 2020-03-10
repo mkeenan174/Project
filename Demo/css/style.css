@@ -203,3 +203,26 @@ header > .user-status{
     background-color: #FFDC00;
     border-radius: 5px;
 }
+
+.tile{
+    margin: 5px;
+    width: 350px;
+    height: 250px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: solid black 1px;
+}
+
+.tile-image-holder{
+    width: 350px;
+    height: 175px;
+    background-image: url('../img/default.jpg');
+    
+}
+
+.tile-title-holder{
+    width: 350px;
+    height: 75px;
+    background-color: #222222;
+    border-radius: 5px;
+}

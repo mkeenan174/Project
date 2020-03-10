@@ -10,9 +10,9 @@ class ManagerContr extends Manager {
 
 
     //Article functionality 
-    public function newArticle($userId, $author, $title, $interest, $opinion, $content){
+    public function newArticle($userId, $author, $title, $interest, $opinion, $content, $key){
         $keywords = $this->articleKeywords($content);
-        $this->insertArticle($userId, $author, $title, $interest, $opinion, $content, $keywords);
+        $this->insertArticle($userId, $author, $title, $interest, $opinion, $content, $keywords, $key);
         echo 'New article added!';
     }
 

@@ -49,13 +49,12 @@ function compTest(){
   var comp = document.createElement('test-comp');
   div.appendChild(comp);
   console.log('compTest');
-
 }
 
 function creator(){
   var div = document.getElementById('test');
   var p = document.createElement('p');
-  p.textContent = ' This is a test paragraph';
+  p.textContent = 'This is a test paragraph';
   div.appendChild(p);
   console.log('creator');
 }

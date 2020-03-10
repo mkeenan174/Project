@@ -34,18 +34,19 @@ $b = [7,3,3,-1];
 // // var_dump($info1);
 // // var_dump($info2);
 // echo calcJaccard($info1, $info2);
-$man = new Manager;
-$article = $man->getArticleInfo(6);
-$articles = $man->getArticlesInfo();
-//var_dump($articles);
-$test =  $articles[10];
-//ar_dump($test);
-$rec = new recommendEngine;
-$rec->setup($article, $articles);
-$rec->jaccardCompare();
+// $man = new Manager;
+// $article = $man->getArticleInfo(6);
+// $articles = $man->getArticlesInfo();
+// //var_dump($articles);
+// $test =  $articles[10];
+// //ar_dump($test);
+// $rec = new recommendEngine;
+// $rec->setup($article, $articles);
+// $rec->jaccardCompare();
 
-
-
+// $obj = new Manager;
+// $test = $obj->generateKey();
+// echo $test;
 
  ?>
 
@@ -108,7 +109,7 @@ $rec->jaccardCompare();
 
 <div id="sidebar">
   <ul>
-    <li>Home</li>
+    <li><a href="home.php">Home</a></li>
     <li> 
       <button id="login">Login</button>
     </li>
@@ -131,6 +132,10 @@ $rec->jaccardCompare();
 
 
    <div id="test-pen"></div>
+   <div class="tile">
+     <div class="tile-image-holder"></div>
+     <div class="tile-title-holder">Example Title</div>
+  </div>
 
    <div class="grid-holder">
        <div class="container carousel">Caroussel

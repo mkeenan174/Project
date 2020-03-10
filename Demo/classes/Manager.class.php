@@ -97,10 +97,10 @@ class Manager extends Dbh{
     }
 
 
-    function insertArticle($userId, $author, $title, $interest, $opinion, $content, $keywords){
-        $sql = 'INSERT INTO articles(user_id, author_name, article_title, article_interest, article_opinion, article_content, article_keywords) VALUES ( ?, ?, ?, ?, ?, ?, ?)';
+    function insertArticle($userId, $author, $title, $interest, $opinion, $content, $keywords, $path){
+        $sql = 'INSERT INTO articles(user_id, author_name, article_title, article_interest, article_opinion, article_content, article_keywords, img_path) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)';
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$userId, $author, $title, $interest, $opinion, $content, $keywords]);
+        $stmt->execute([$userId, $author, $title, $interest, $opinion, $content, $keywords,$path]);
 
     }
 
@@ -208,8 +208,43 @@ class Manager extends Dbh{
         $stmt->execute([$user, $article, $type] );
     }
 
-    protected fileHandler($file){
-        
+    // Random Key Gneration
+    protected function insertKey($key){
+        $sql = "INSERT INTO keystrings VALUES (?)";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$key]);
     }
 
+    protected function checkKeys($randStr){
+        $keyExists = false;
+        $sql = 'SELECT * FROM keystrings';
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        if($stmt->rowCount()){
+            while($row = $stmt->fetch()){
+               if($row['keystringKey'] == $randStr){
+                    $keyExists = true;
+                    break;
+                }
+            }
+        }
+        return $keyExists;
+    }
+
+    function generateKey(){
+        $keyLength = 10;
+        $str = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ()/$";
+        $randStr = substr(str_shuffle($str), 0, $keyLength);
+
+        $checkKey = $this->checkKeys($randStr);
+
+        while ($checkKey == true){
+            $randStr = substr(str_shuffle($str), 0, $keyLength);
+            $checkKey = $this->checkKeys();
+        }
+
+        $this->insertKey($randStr);
+        return $randStr;
+    }
 }

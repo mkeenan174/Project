@@ -182,3 +182,45 @@
 
 
 // }
+
+export function getArticles(location){
+    let articles;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET','xhr.inc.php?instruct=getArticles', true);
+    xhr.onload = function(){
+        if(this.status == 200){
+            articles = JSON.parse(this.responseText);
+            drawCards(articles, location);
+        }else{
+            console.log('Article request Failed');
+        } 
+    }
+
+    xhr.send();
+}
+
+export function drawCards(articles, location){
+    var destination = document.getElementById(location);
+
+    articles.forEach(item =>{
+        let cardImage = new Image();
+        cardImage.onload = function(){
+            ctx.drawImage(image, 0, 0, 1024, 576);
+            $('#outputImage').attr('src', canvas.toDataURL("image/jpeg"));
+        };
+        console.log(item.img_path);
+        console.log(item.article_title);
+        if(item.img_path !== ''){
+            console.log(item.image_path);
+            cardImage.src = item.image_path;
+        }else{
+            cardImage.src = './img/default.jpg';
+        }
+
+        destination.appendChild(cardImage);
+        console.log('Card appended');
+        
+    });
+ }
+
+ export default {getArticles, drawCards};

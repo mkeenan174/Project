@@ -234,10 +234,12 @@ function getArticle(){
     }
 }
 
-function publishArticle($userID, $username, $title, $interest, $opinion, $content ){
+function publishArticle($userID, $username, $title, $interest, $opinion, $content){
     if(loggedInCheck() == true){
         $pubService = new ManagerContr();
-        echo $pubService->newArticle($userID, $username,  $title, $interest, $opinion, $content);
+        $key = $pubService->generateKey();
+        $path = fileHandler($key);
+        echo $pubService->newArticle($userID, $username,  $title, $interest, $opinion, $content, $path);
     }else{
         echo 'Not logged in';
     }
@@ -291,9 +293,9 @@ function addComment(){
 }
 
 
-function fileHandler(){
+function fileHandler($key){
     $file = $_FILES['file'];
-    $fileName = $_FILES['file']['name'];
+    $fileName =$_FILES['file']['name'];
     $fileTmpName = $_FILES['file']['tmp_name'];
     $fileSize = $_FILES['file']['size'];
     $fileError = $_FILES['file']['error'];
@@ -307,10 +309,13 @@ function fileHandler(){
     if(in_array($fileActualExt, $allowed)){
         if($fileError === 0){
             if($fileSize < 1000000 ){
-                $fileNameNew = uniqid('','true').".".$fileActualExt;
-                $fileDestination = 'img/'.$fileNameNew;
+                $name = 'test';
+                $fileNameNew = $key.".".$fileActualExt;
+                //print_r ($fileNameNew);
+                $fileDestination = 'img/articles/'.$fileNameNew;
                 move_uploaded_file($fileTmpName, $fileDestination );
-                echo 'Upload success!';
+                echo $fileDestination;
+                return $fileDestination;
             }else{
                 echo 'Filesize is too large';
             }
@@ -320,6 +325,4 @@ function fileHandler(){
     }else{
         echo 'Error wrong file type!';
     }
-
-
 }
