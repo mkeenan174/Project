@@ -183,6 +183,29 @@
 
 // }
 
+export function formatImage(path, width, height, destination){
+    const img = new Image();
+    
+
+    if(path.length > 27){
+        let source = './'+path;
+        img.src = source;
+        console.log('uploaded img');
+    }else{
+        img.src = './img/default.jpg';
+
+    }
+    img.onload = () =>{
+        const elem = document.createElement('canvas');
+        elem.width = width;
+        elem.height = height;
+        const ctx = elem.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        destination.appendChild(elem);
+    }
+
+}
+
 export function getArticles(location){
     let articles;
     var xhr = new XMLHttpRequest();
@@ -201,26 +224,65 @@ export function getArticles(location){
 
 export function drawCards(articles, location){
     var destination = document.getElementById(location);
-
-    articles.forEach(item =>{
-        let cardImage = new Image();
-        cardImage.onload = function(){
-            ctx.drawImage(image, 0, 0, 1024, 576);
-            $('#outputImage').attr('src', canvas.toDataURL("image/jpeg"));
-        };
-        console.log(item.img_path);
-        console.log(item.article_title);
-        if(item.img_path !== ''){
-            console.log(item.image_path);
-            cardImage.src = item.image_path;
-        }else{
-            cardImage.src = './img/default.jpg';
+    var Counter = 0;
+    for (let item of articles){
+        if(Counter === 6){
+            break;
         }
+        let tile = document.createElement('div');
+        let img = document.createElement('div');
+        let titleHolder = document.createElement('div');
+        let tileTitle = document.createElement('h3');
 
-        destination.appendChild(cardImage);
-        console.log('Card appended');
+        tile.appendChild(img);
+        tile.appendChild(titleHolder);
+        titleHolder.appendChild(tileTitle);
+        tileTitle.innerText = item.article_title;
+        titleHolder.style.backgroundColor = '#333';
+        //Setting class
+        tile.className = 'tile';
+        img.className = 'tile-image-holder';
+        titleHolder.className = 'tile-title-holder';
+        tileTitle.className = 'tile-title';
+
+        //Setting id attribute
+        tile.id = item.article_id;
+        img.id = item.article_id;
+        titleHolder.id = item.article_id;
+        tileTitle.id = item.article_id;
+
+        formatImage(item.img_path, 250, 100, img);
+        destination.appendChild(tile);
+
+        Counter++
         
-    });
+    }
  }
 
- export default {getArticles, drawCards};
+ function gotoArticle(id){
+    console.log(id);
+    window.document.location = 'articlepage.php'+'?article=' + id;
+}
+
+function detectClick(target){
+    console.log(target.className);
+    console.log(target.parentElement.className);
+    if(target.className == 'tile' || target.class == 'tile-title' || target.class == 'tile-title-holder'|| target.class == 'tile-image-holder'){
+        gotoArticle(target.id);
+    }else{
+        if(target.parentElement.className == 'tile' || target.parentElement.className == 'tile-image-holder'|| target.parentElement.className == 'tile-title-holder'){
+            gotoArticle(target.parentElement.id);
+        }
+    }
+}
+
+
+export function setup(){
+    var body = document.getElementById("doc-body");
+    body.addEventListener('click', (e) =>{
+        detectClick(e.target);
+
+    });
+}
+
+ export default {getArticles, drawCards, setup, formatImage};

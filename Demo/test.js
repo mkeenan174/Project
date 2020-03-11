@@ -13,7 +13,8 @@ window.addEventListener('load', () => {
     //log.logStatus();
     log.Setup();
     ui.setup();
-    //articles.getArticles('test-pen');
+    articles.setup();
+    articles.getArticles('rec-tiles');
     // talk();
     // var comments = SetUpComments();
     // var articles = SetupArticles();

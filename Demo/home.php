@@ -91,11 +91,12 @@ $b = [7,3,3,-1];
 <div class="login-modal">
   <div class="login-content">
     <div id="in-close" class="close">+</div>
-    <form >
-      <input class="log-input" type="email" id="email-input" placeholder="email...">
-      <input class="log-input" type="password" id="pswd-input" placeholder="Password...">
-      <div id="login-btn" class="login-btn" >Login</div>
-    </form>
+      <form >
+        <input class="log-input" type="email" id="email-input" placeholder="email...">
+        <input class="log-input" type="password" id="pswd-input" placeholder="Password...">
+        <div id="login-btn" class="login-btn" >Login</div>
+        <a class="signup-link"href="signup.html">Sign up Here!</a>
+      </form>
   </div>
 </div>
 
@@ -170,7 +171,7 @@ $b = [7,3,3,-1];
                 </a>
             </div>
        </div>
-       <div class="container recommended-cards">Recommended</div>
+       <div id='rec-tiles'class="container recommended-cards"></div>
        <div class="container alternate-cards">Alternate</div>
    </div>
 </body>

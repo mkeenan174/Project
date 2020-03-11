@@ -1,4 +1,6 @@
-
+import articles from './article.js';
+import log from './log.js';
+import ui from './ui.js';
 
 var liked = false;
 var disliked = false;
@@ -7,7 +9,8 @@ var commentsRevealed = false;
 window.addEventListener('load', () => {
     const articleId = document.location.search.replace(/^.*?\=/,'');
     loadArticle(articleId);
-
+    log.Setup();
+    ui.setup();
 
      //Adding event listener
      window.addEventListener('click', (e) => {
@@ -85,9 +88,12 @@ function drawArticle(article){
     let likesHolder = document.getElementById('Likes');
     let dislikesHolder = document.getElementById('Dislikes');
     let contentHolder = document.getElementById('content');
+    let imageHolder = document.getElementById('article-image');
+    
+    articles.formatImage(article[0].img_path, 700, 200, imageHolder);
 
     titleHolder.innerText =  article[0].article_title;
-    authorHolder.innerText = article[0].author_name;
+    authorHolder.innerText = 'By: '+article[0].author_name;
     readsHolder.innerText  = 'Reads: '+article[0].article_reads;
     likesHolder.innerText = article[0].article_likes;
     dislikesHolder.innerText = article[0].article_dislikes;
