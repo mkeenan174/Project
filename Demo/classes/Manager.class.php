@@ -164,8 +164,8 @@ class Manager extends Dbh{
             return $results;
         }
     }
-    // Comment functions 
 
+    // Comment functions
     protected function insertComment($authorId, $articleId, $author, $content ){
         $sql = 'INSERT INTO comments ( user_id, article_id, comment_author, comment_content) VALUES (?, ?, ?, ?)';
         $stmt = $this->connect()->prepare($sql);
@@ -208,7 +208,150 @@ class Manager extends Dbh{
         $stmt->execute([$user, $article, $type] );
     }
 
-    // Random Key Gneration
+    protected function getUserEvents($user){
+        $sql = 'SELECT * FROM evnts WHERE user_id =? ';
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$user]);
+        $results = json_encode($stmt->fetchAll());
+        return $results;
+    }
+
+    protected function getUserPolitics($user){
+        $results = array();
+
+        $sql1 = "SELECT articles.article_id, evnts.event_type from articles join evnts on articles.article_id = evnts.article_ID where evnts.user_id = ? AND articles.article_opinion = 'Left'";
+        $stmt1 = $this->connect()->prepare($sql1);
+        $stmt1->execute([$user]);
+        $result1 = $stmt1->fetchAll();
+        $left = count($result1);
+        
+
+        $sql2 = "SELECT articles.article_id, evnts.event_type from articles join evnts on articles.article_id = evnts.article_ID where evnts.user_id = ? AND articles.article_opinion = 'Right'";
+        $stmt2 = $this->connect()->prepare($sql2);
+        $stmt2->execute([$user]);
+        $result2 = $stmt2->fetchAll();
+        
+        $right = count($result2);
+
+        $total = $right + $left;
+
+        $leftPercent = ($left / $total) * 100;
+        array_push($results, $leftPercent);
+
+        $rightPercent = ($right / $total) * 100;
+        array_push($results, $rightPercent);
+
+        return json_encode($results);
+    }
+
+
+    function getLikesInfo($user){
+        $sql = "SELECT articles.article_id, articles.author_name, articles.article_interest, articles.article_opinion, articles.article_keywords 
+        from articles join evnts on articles.article_id = evnts.article_ID where evnts.user_id = ? AND evnts.event_type = 'Like'";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$user]);
+        $result = $stmt->fetchAll();
+        return $result;
+    }
+
+    function getUserDislikesInfo($user){
+        $sql = "SELECT articles.article_id, articles.author_name, articles.article_interest, articles.article_opinion, articles.article_keywords 
+        from articles join evnts on articles.article_id = evnts.article_ID where evnts.user_id = ? AND evnts.event_type = 'Dislike'";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$user]);
+        $result = $stmt->fetchAll();
+        return $result;
+    }
+
+    function getUserReadsInfo($user){
+        $sql = "SELECT articles.article_id, articles.author_name, articles.article_interest, articles.article_opinion, articles.article_keywords 
+        from articles join evnts on articles.article_id = evnts.article_ID where evnts.user_id = ? AND evnts.event_type = 'Read'";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$user]);
+        $result = $stmt->fetchAll();
+        return $result;
+    }
+
+    function getUserCommentInfo($user){
+        $sql = "SELECT articles.article_id, articles.author_name, articles.article_interest, articles.article_opinion, articles.article_keywords 
+        from articles join evnts on articles.article_id = evnts.article_ID where evnts.user_id = ? AND evnts.event_type = 'Comment'";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$user]);
+        $result = $stmt->fetchAll();
+        return $result;
+    }
+
+    function getInfo($user, $col, $type){
+        $pool = array();
+        switch($col){
+            case 'author':
+                $column = 'articles.author_name';
+                $header = 'author_name';
+            break;
+        }
+
+        $sql = "SELECT $column 
+        from articles join evnts on articles.article_id = evnts.article_ID where evnts.user_id = ? AND evnts.event_type = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([ $user, $type]);
+        if($stmt->rowCount()){
+            while($row = $stmt->fetch()){
+                  array_push($pool, $row[$header]);        
+            }
+            return $pool;   
+        }
+    }
+
+
+    function calcFavouriteAuthor($user){
+        $authorpool = array();
+
+        $sql = "SELECT articles.author_name 
+        from articles join evnts on articles.article_id = evnts.article_ID where evnts.user_id = ? AND evnts.event_type = 'Read'";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$user]);
+        if($stmt->rowCount()){
+            while($row = $stmt->fetch()){
+                  array_push($authorpool, $row['author_name']);        
+            }   
+        }
+        $sql1 = "SELECT articles.author_name 
+        from articles join evnts on articles.article_id = evnts.article_ID where evnts.user_id = ? AND evnts.event_type = 'Like'";
+        $stmt1 = $this->connect()->prepare($sql1);
+        $stmt1->execute([$user]);
+        if($stmt1->rowCount()){
+            while($row = $stmt1->fetch()){
+                  array_push($authorpool, $row['author_name']);        
+            }
+        }
+
+        $sql2 = "SELECT articles.author_name 
+        from articles join evnts on articles.article_id = evnts.article_ID where evnts.user_id = ? AND evnts.event_type = 'Comment'";
+        $stmt2 = $this->connect()->prepare($sql2);
+        $stmt2->execute([$user]);
+        if($stmt2->rowCount()){
+            while($row = $stmt2->fetch()){
+                  array_push($authorpool, $row['author_name']);        
+            }
+        }
+        return array_count_values($authorpool);
+    }
+
+    protected function calcFavouriteInterests(){
+        
+
+       
+    }
+
+    protected function calcFavouriteKeywords(){
+
+    }
+
+    protected function calcPoliticalLeaning(){
+
+    }
+
+    // Random Key Generation
     protected function insertKey($key){
         $sql = "INSERT INTO keystrings VALUES (?)";
         $stmt = $this->connect()->prepare($sql);

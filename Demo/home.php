@@ -48,6 +48,10 @@ $b = [7,3,3,-1];
 // $test = $obj->generateKey();
 // echo $test;
 
+$tester = new Manager;
+$test = array();
+$result = $tester->getInfo(4, 'author', 'Like');
+var_dump($result);
  ?>
 
 
@@ -116,7 +120,7 @@ $b = [7,3,3,-1];
     </li>
     <li>Search</li>
     <li><a href="publish.html">Publish</a></li>
-    <li>Profile</li>
+    <li><a href="profilepage.html">Profile</a></li>
     
 
   </ul>

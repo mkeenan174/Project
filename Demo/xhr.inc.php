@@ -25,6 +25,11 @@ if(isset($_GET)){
 function serviceManager($service){
 
     switch ($service) {
+
+        case 'test':
+            echo 'Promise';
+        break; 
+
         case 'getArticles':
             // $ArtService = new ManagerView;
             // echo $ArtService->showArticles();
@@ -156,6 +161,14 @@ function serviceManager($service){
                 echo 'You must be logged in to publish an article!';
             }
             break;
+        
+        case 'Profile':
+            echo profile();
+        break;
+
+        case 'opinion':
+            echo politicalOpinion();
+        break;
 
         
     }
@@ -290,6 +303,24 @@ function addComment(){
         $addCommentService = new ManagerContr;
         echo $addCommentService->newComment($_SESSION['uid'], $_POST['id'], $_SESSION['username'], $_POST['content']);
     }
+}
+
+function profile(){
+    if(loggedInCheck() == true){
+        $profileInfoService = new ManagerView;
+        return $profileInfoService->userEvents($_SESSION['uid']);
+    }else{
+        return 'Error not logged in!';
+    }
+}
+
+function politicalOpinion(){
+    if(loggedInCheck() == true){
+        $opinionService = new ManagerView;
+        return  $opinionService->userPolitics($_SESSION['uid']);
+    }else{
+        return 'Error not logged in!';
+    }   
 }
 
 

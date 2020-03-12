@@ -61,9 +61,18 @@ class ManagerView extends Manager{
             $_SESSION['uid'] = $info[0];
             $_SESSION['username'] = $info[1];
             $_SESSION['email'] = $email;
-
             return $_SESSION['username'];
         }
+    }
+
+    public function userEvents($user){
+        $events = $this->getUserEvents($user);
+        return $events;
+    }
+
+    public function userPolitics($user){
+        $results = $this->getUserPolitics($user);
+        return $results;
     }
 
    

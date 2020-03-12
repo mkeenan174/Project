@@ -259,6 +259,19 @@ export function drawCards(articles, location){
     }
  }
 
+ export function getArticle(id){
+    const xhr = new XMLHttpRequest;
+    xhr.open('GET','xhr.inc.php?instruct=getArticle&info='+id, true);
+    xhr.onload = function(){
+        if(this.status == 200){
+          let article = JSON.parse(this.responseText);
+          console.log(article);
+          return article;
+        }
+    }
+    xhr.send();
+
+ }
  function gotoArticle(id){
     console.log(id);
     window.document.location = 'articlepage.php'+'?article=' + id;
@@ -285,4 +298,4 @@ export function setup(){
     });
 }
 
- export default {getArticles, drawCards, setup, formatImage};
+ export default {getArticles, drawCards, setup, formatImage, getArticle};
