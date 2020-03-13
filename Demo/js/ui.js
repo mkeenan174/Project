@@ -29,7 +29,7 @@ function setup(){
             }
         });
 
-        let loginClose = document.querySelector('.close');
+        let loginClose = document.getElementById('in-close');
         loginClose.addEventListener('click', () => {
             document.querySelector('.login-modal').style.display = 'none';
         });
@@ -39,6 +39,15 @@ function setup(){
         let logoutClose = document.getElementById('out-close');
         logoutClose.addEventListener('click', () => {
             document.querySelector('.logout-modal').style.display = 'none';
+        });
+
+        let menuSearch = document.getElementById('menu-search-btn');
+        menuSearch.addEventListener('click', () =>{
+            console.log('search');
+            if(document.getElementById('search-input-menu').value !== null){
+                let input = document.getElementById('search-input-menu').value;
+                window.document.location = 'searchpage.php'+'?search=' + input;
+            }
         });
         
 

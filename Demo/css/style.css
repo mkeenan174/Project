@@ -53,6 +53,47 @@ body{
     color: #fff;
     font-size: 20px;
     padding: 20px 24px;
+    display: flex;
+    align-items: center;
+}
+.search-expand{
+    width: 15px;
+    height: 0px;
+    color: #fffeee;
+    margin: 10px;
+    margin-top: 20px;
+    background-color: 000;
+    border: none;
+    box-shadow: none;
+}
+
+.search-expand i{
+    margin-top: 15px;
+
+}
+
+.search-container-small{
+    display: flex;
+    align-items: center;
+}
+.search-small{
+    width: 10em;
+    height: 28px;
+    margin: 10px;
+    border-radius: 2px;
+    border: none;
+    box-shadow: none;
+    margin-left: 0;
+    padding: 5px;
+}
+
+.search-button{
+    width: 26px;
+    height: 26px;
+    border-radius: 2px;
+    border: none;
+    box-shadow: none;
+    background-color:#FFC300 ;
 }
 
 
@@ -156,6 +197,9 @@ header > .user-status{
 
 .close{
     position: absolute;
+    width: 40px;
+    height: 40px;
+    padding: 10px;
     top: 0;
     right: 14px;
     font-size: 42px;
@@ -379,4 +423,68 @@ header > .user-status{
     border-radius: 2px;
     border: none;
     box-shadow: none;
+}
+
+/* Search page styling */
+
+.search-utilities{
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;;
+    background-color: #111111;
+    width: 60vw;
+}
+
+.search-bar{
+    width: 70%;
+    margin: 10px;
+    border-radius: 2px;
+    border: none;
+    box-shadow: none;
+    padding: 5px;
+
+}
+
+.search-button-L{
+    width: 29px;
+    height: 29px;
+    border-radius: 2px;
+    border: none;
+    box-shadow: none;
+    background-color:#FFC300 ;
+}
+
+.results-container{
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    border: solid black 1px;
+    width: 60vw;
+    height: 90vh;
+    background-color: cornflowerblue;
+}
+
+.tile-l{
+    width: 400px;
+    height: 200px;
+    background-color: darkgray;
+    margin: 40px;
+}
+
+.tile-l-img{
+    width: 400px;
+    height: 140px;
+    padding: 0;
+    margin: 0;
+    background-color: darkgreen;
+}
+
+.tile-l-title{
+    width: 400px;
+    height: 60px;
+    padding: 0;
+    margin: 0;
+    background-color: black;
 }

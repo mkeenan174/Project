@@ -48,10 +48,16 @@ $b = [7,3,3,-1];
 // $test = $obj->generateKey();
 // echo $test;
 
-$tester = new Manager;
-$test = array();
-$result = $tester->getInfo(4, 'author', 'Like');
-var_dump($result);
+// $tester = new Manager;
+// $test = array();
+// $result = $tester->calcFavouriteAuthor(4);
+// var_dump($result);
+// $result = $tester->calcFavouriteInterests(4);
+// var_dump($result);
+// $result = $tester->calcFavouriteKeywords(4);
+// var_dump($result);
+// $result = $tester->calcOpinion(4);
+// var_dump($result);
  ?>
 
 
@@ -118,7 +124,15 @@ var_dump($result);
     <li> 
       <button id="login">Login</button>
     </li>
-    <li>Search</li>
+    <li>
+      <div>
+        <div class="search-container-small">
+          <input type="search" id="search-input-menu" class="search-small" placeholder="Search..."> 
+          <button id="menu-search-btn" class="search-button"><i class="material-icons">search</i></button>
+        </div>
+      </div>
+    
+    </li>
     <li><a href="publish.html">Publish</a></li>
     <li><a href="profilepage.html">Profile</a></li>
     

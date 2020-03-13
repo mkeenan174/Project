@@ -288,12 +288,28 @@ class Manager extends Dbh{
                 $column = 'articles.author_name';
                 $header = 'author_name';
             break;
+
+            case 'interest':
+                $column = 'articles.article_interest';
+                $header = 'article_interest';
+            break;
+
+            case 'opinion':
+                $column = 'articles.article_opinion';
+                $header = 'article_opinion';
+            break;
+
+            case 'keywords':
+                $column = 'articles.article_keywords';
+                $header = 'article_keywords';
+            break;
+
         }
 
         $sql = "SELECT $column 
         from articles join evnts on articles.article_id = evnts.article_ID where evnts.user_id = ? AND evnts.event_type = ?";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([ $user, $type]);
+        $stmt->execute([$user, $type]);
         if($stmt->rowCount()){
             while($row = $stmt->fetch()){
                   array_push($pool, $row[$header]);        
@@ -304,51 +320,35 @@ class Manager extends Dbh{
 
 
     function calcFavouriteAuthor($user){
-        $authorpool = array();
-
-        $sql = "SELECT articles.author_name 
-        from articles join evnts on articles.article_id = evnts.article_ID where evnts.user_id = ? AND evnts.event_type = 'Read'";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$user]);
-        if($stmt->rowCount()){
-            while($row = $stmt->fetch()){
-                  array_push($authorpool, $row['author_name']);        
-            }   
-        }
-        $sql1 = "SELECT articles.author_name 
-        from articles join evnts on articles.article_id = evnts.article_ID where evnts.user_id = ? AND evnts.event_type = 'Like'";
-        $stmt1 = $this->connect()->prepare($sql1);
-        $stmt1->execute([$user]);
-        if($stmt1->rowCount()){
-            while($row = $stmt1->fetch()){
-                  array_push($authorpool, $row['author_name']);        
-            }
-        }
-
-        $sql2 = "SELECT articles.author_name 
-        from articles join evnts on articles.article_id = evnts.article_ID where evnts.user_id = ? AND evnts.event_type = 'Comment'";
-        $stmt2 = $this->connect()->prepare($sql2);
-        $stmt2->execute([$user]);
-        if($stmt2->rowCount()){
-            while($row = $stmt2->fetch()){
-                  array_push($authorpool, $row['author_name']);        
-            }
-        }
-        return array_count_values($authorpool);
+       $authorpool = array();
+       $authorpool = array_merge($authorpool, $this->getInfo($user, 'author', 'Like'));
+       $authorpool = array_merge($authorpool, $this->getInfo($user, 'author', 'Read'));
+       $authorpool = array_merge($authorpool, $this->getInfo($user, 'author', 'Comment'));
+       return array_count_values($authorpool);
     }
 
-    protected function calcFavouriteInterests(){
-        
-
-       
+    function calcFavouriteInterests($user){
+       $interestpool = array();
+       $interestpool = array_merge($interestpool, $this->getInfo($user, 'interest', 'Like'));
+       $interestpool = array_merge($interestpool, $this->getInfo($user, 'interest', 'Read'));
+       $interestpool = array_merge($interestpool, $this->getInfo($user, 'interest', 'Comment'));
+       return array_count_values($interestpool);
     }
 
-    protected function calcFavouriteKeywords(){
-
+    function calcFavouriteKeywords($user){
+        $keywordpool = array();
+        $keywordpool = array_merge($keywordpool, $this->getInfo($user, 'keywords', 'Like'));
+        $keywordpool = array_merge($keywordpool, $this->getInfo($user, 'keywords', 'Read'));
+        $keywordpool = array_merge($keywordpool, $this->getInfo($user, 'keywords', 'Comment'));
+        return array_count_values($keywordpool);
     }
 
-    protected function calcPoliticalLeaning(){
-
+    function calcOpinion($user){
+        $opinionpool = array();
+        $opinionpool = array_merge($opinionpool, $this->getInfo($user, 'opinion', 'Like'));
+        $opinionpool = array_merge($opinionpool, $this->getInfo($user, 'opinion', 'Read'));
+        $opinionpool = array_merge($opinionpool, $this->getInfo($user, 'opinion', 'Comment'));
+        return array_count_values($opinionpool);
     }
 
     // Random Key Generation

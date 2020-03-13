@@ -1,11 +1,23 @@
+
+import articles from './js/article.js';
+
 window.addEventListener('load', () => {
-   var searchBtn = document.getElementById('search-button');
+    let loadSearch = document.location.search.replace(/^.*?\=/,'');
+    console.log(loadSearch);
+    const searchBtn = document.getElementById('search-button');
+    const searchBar = document.getElementById('search-input'); 
+    searchBar.value = loadSearch;
+    //getSearchResults(searchBar.value, painter);
+
   
 
-
     searchBtn.addEventListener('click', () =>{
-        printer(document.getElementById('search-input').value);
+        //printer(document.getElementById('search-input').value);
         getSearchResults(document.getElementById('search-input').value, painter);
+        let parent = document.getElementById('search-results');
+        while(parent.firstChild){
+       parent.removeChild(parent.firstChild);
+   }
 
     });
 
@@ -24,6 +36,7 @@ function getSearchResults(input, callback){
         xhr.onload = function(){
             if(this.status == 200){
                articles = JSON.parse(this.responseText);
+               console.log(articles);
                callback(articles); 
             }
         }
@@ -32,7 +45,7 @@ function getSearchResults(input, callback){
 
 
 function painter(objs){
-        var destination = document.getElementById('search-results-pen');
+        const destination = document.getElementById('search-results');
 
         objs.forEach(item =>{
 

@@ -183,6 +183,15 @@
 
 // }
 
+
+function viewToPixel(type, amount){
+    if(type == 'width' ){
+        return document.documentElement.clientWidth * (amount / 100);
+    }else{
+        return document.documentElement.clientHeight * (amount / 100);
+    }
+}
+
 export function formatImage(path, width, height, destination){
     const img = new Image();
     
@@ -222,7 +231,7 @@ export function getArticles(location){
     xhr.send();
 }
 
-export function drawCards(articles, location){
+export function drawCards(articles, location, size){
     var destination = document.getElementById(location);
     var Counter = 0;
     for (let item of articles){
@@ -250,6 +259,20 @@ export function drawCards(articles, location){
         img.id = item.article_id;
         titleHolder.id = item.article_id;
         tileTitle.id = item.article_id;
+
+        switch (size) {
+            case 's':
+                let w = 250;
+                let h = 100;
+            break;
+
+            case 'm':
+                let 
+
+            
+
+            
+        }
 
         formatImage(item.img_path, 250, 100, img);
         destination.appendChild(tile);
@@ -291,11 +314,9 @@ function detectClick(target){
 
 
 export function setup(){
-    var body = document.getElementById("doc-body");
-    body.addEventListener('click', (e) =>{
-        detectClick(e.target);
-
-    });
+  window.addEventListener('click', (e)=> {
+    detectClick(e.target);
+  });
 }
 
  export default {getArticles, drawCards, setup, formatImage, getArticle};
